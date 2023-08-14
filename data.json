@@ -1,0 +1,88 @@
+[
+    {
+      "id": 1,
+      "title": "iPhone 14 Pro Max",
+      "description": "The most advanced iPhone ever.",
+      "price": 1099,
+      "discountPercentage": 0,
+      "rating": 4.9,
+      "stock": 100,
+      "brand": "Apple",
+      "category": "smartphones",
+      "thumbnail": "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/54/1326212/1.jpg?8191",
+      "images": [
+        "https://i.imgur.com/41Ic9yN.jpg",
+        "https://i.imgur.com/q35j3lD.jpg",
+        "https://i.imgur.com/v0h2eMx.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Samsung Galaxy S23 Ultra",
+      "description": "The best Android phone on the market.",
+      "price": 999,
+      "discountPercentage": 0,
+      "rating": 4.8,
+      "stock": 50,
+      "brand": "Samsung",
+      "category": "smartphones",
+      "thumbnail": "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/32/1485042/1.jpg?3420",
+      "images": [
+        "https://i.imgur.com/y2m7X2A.jpg",
+        "https://i.imgur.com/o440951.jpg",
+        "https://i.imgur.com/00k46sK.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "MacBook Pro M2",
+      "description": "The most powerful MacBook ever.",
+      "price": 1299,
+      "discountPercentage": 0,
+      "rating": 4.7,
+      "stock": 200,
+      "brand": "Apple",
+      "category": "laptops",
+      "thumbnail": "https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/82/8945652/1.jpg?7938",
+      "images": [
+        "https://i.imgur.com/131u93r.jpg",
+        "https://i.imgur.com/456383e.jpg",
+        "https://i.imgur.com/69f5j8s.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dell XPS 13",
+      "description": "The most popular XPS laptop.",
+      "price": 999,
+      "discountPercentage": 0,
+      "rating": 4.6,
+      "stock": 100,
+      "brand": "Dell",
+      "category": "laptops",
+      "thumbnail": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/78/7718352/1.jpg?3101",
+      "images": [
+        "https://i.imgur.com/005f8Qq.jpg",
+        "https://i.imgur.com/184f84K.jpg",
+        "https://i.imgur.com/v0y07mF.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "AirPods Pro",
+      "description": "The best wireless earbuds on the market.",
+      "price": 249,
+      "discountPercentage": 0,
+      "rating": 4.9,
+      "stock": 100,
+      "brand": "Apple",
+      "category": "earphones",
+      "thumbnail": "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/93/8122912/1.jpg?5469",
+      "images": [
+        "https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/93/8122912/2.jpg?5469",
+        "https://i.imgur.com/892346w.jpg",
+        "https://i.imgur.com/i49364o.jpg"
+      ]
+    }
+  ]
+  
