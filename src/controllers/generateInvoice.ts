@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { LightningAddress } from "@getalby/lightning-tools";
-import { Invoice } from "../interface";
+import { Invoice } from "@getalby/lightning-tools";
+import { listenInvoice } from "./listenInvoice";
 
 if (!process.env.MERCHANT_LN_ADDRESS) {
   throw new Error(
@@ -22,7 +23,10 @@ export const generateInvoice = async (req: Request, res: Response) => {
     const invoice: Invoice = await ln.requestInvoice({
       satoshi: req.body.amount,
     });
-    res.status(200).json({
+
+    listenInvoice(invoice,res)
+
+    return res.status(200).json({
       invoice: invoice,
     });
   } catch (error) {
