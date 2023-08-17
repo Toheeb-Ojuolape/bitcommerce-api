@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { LightningAddress } from "@getalby/lightning-tools";
 import { Invoice } from "@getalby/lightning-tools";
-import { listenInvoice } from "./listenInvoice";
+import { listenInvoice } from "../helpers/listenInvoice";
 
 if (!process.env.MERCHANT_LN_ADDRESS) {
   throw new Error(
