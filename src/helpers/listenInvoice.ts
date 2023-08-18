@@ -8,10 +8,10 @@ export const listenInvoice = async (
   res: Response
 ) => {
   try {
-    const id = setInterval(async () => {
+    const intervalId = setInterval(async () => {
       const paid = await invoice.isPaid();
       if (paid) {
-        clearInterval(id);
+        clearInterval(intervalId);
         io.emit("payment-verified", {
           message: "Payment verified successfully",
         });

@@ -2,16 +2,15 @@ require("dotenv").config()
 const express = require("express");
 import { Request,Response } from "express";
 import router from "./src/routes/routes";
-import { Socket } from "socket.io";
 const cors = require("cors");
 
-const port = 5000;
+const port = process.env.PORT || 5001;
 
 const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.PROJECT_URL,
   })
 );
 
