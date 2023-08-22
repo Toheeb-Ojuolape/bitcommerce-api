@@ -1,3 +1,5 @@
+const sendNotification = require("./email");
+
 module.exports.listenInvoice = async (req, invoice, res) => {
   try {
     const intervalId = setInterval(async () => {
@@ -7,6 +9,7 @@ module.exports.listenInvoice = async (req, invoice, res) => {
         req.io.emit("payment-verified", {
           message: "Payment verified successfully",
         });
+        sendNotification(req.body, res);
       }
     }, 5000);
   } catch (error) {
