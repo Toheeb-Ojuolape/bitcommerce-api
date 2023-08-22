@@ -46,10 +46,10 @@ async function sendNotification(payload: EmailPayload, res: Response) {
   });
 
   var mailOptions = {
-    from: "Bitcoin⚡Shop <tobilobaojuolape@gmail.com>",
+    from: `"Bitcoin⚡Shop <${process.env.EMAIL_ADDRESS}>"`,
     to: `${payload.email},${process.env.EMAIL_ADDRESS}`,
-    replyTo: "tobilobaojuolape@gmail.com",
-    subject: "Your order has been recieved, "+payload.name,
+    replyTo: process.env.EMAIL_ADDRESS,
+    subject: "Your order has been received, "+payload.name,
     html: html,
   };
 
