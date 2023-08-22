@@ -25,11 +25,11 @@ export const generateInvoice = async (req: Request, res: Response) => {
       comment: req.body.order,
       payerdata: {
         name: req.body.name,
-        email: req.body.email
-    }
+        email: req.body.email,
+      },
     });
 
-    listenInvoice(invoice,res)
+    listenInvoice(req, invoice, res);
 
     return res.status(200).json({
       invoice: invoice,

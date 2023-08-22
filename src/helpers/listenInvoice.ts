@@ -1,9 +1,11 @@
 import { Invoice } from "@getalby/lightning-tools";
-import { Response } from "express";
+import { Request,Response } from "express";
 import { io } from "../app";
+import sendNotification, { EmailPayload } from "./email";
 
 
 export const listenInvoice = async (
+  req:Request,
   invoice: Invoice,
   res: Response
 ) => {
@@ -15,6 +17,7 @@ export const listenInvoice = async (
         io.emit("payment-verified", {
           message: "Payment verified successfully",
         });
+        sendNotification(req.body as EmailPayload,res)
       }
     }, 5000);
   } catch (error) {
