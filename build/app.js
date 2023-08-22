@@ -1,26 +1,44 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.io = void 0;
 require("dotenv").config();
 const express = require("express");
-const routes_1 = require("./src/routes/routes");
 const cors = require("cors");
-const port = 5000;
+const http = require("http");
+const socketIo = require("socket.io");
+const router = require("./routes/routes");
+
+
+const port = process.env.PORT || 5001;
+
 const app = express();
-app.use(cors({
-    origin: "*",
-}));
+const server = http.createServer(app);
+
+app.use(
+  cors({
+    origin: process.env.PROJECT_URL,
+  })
+);
+
 app.use(express.json());
-const server = app.listen(port, () => {
-    console.log(`App listening on PORT: ${port}`);
+
+server.listen(port, () => {
+  console.log(`App listening on PORT: ${port}`);
 });
+
+const io = socketIo(server, {
+  cors: {
+    origin: [process.env.PROJECT_URL],
+  },
+});
+
 app.get("/", (req, res) => {
-    res.send(`<h2>Bitcommerce API</h2>`);
+  res.send("<h2>Bitcommerce API</h2>");
 });
-const io = require("socket.io")(server, {
-    cors: {
-        origin: [process.env.PROJECT_URL],
-    },
+
+// Attach the io instance to the request object
+app.use((req, res, next) => {
+  req.io = io;
+  next();
 });
-exports.io = io;
-app.use(routes_1.default);
+
+app.use(router);
+
+// No need to export io in this case
