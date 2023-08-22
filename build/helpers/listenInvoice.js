@@ -1,18 +1,10 @@
-import { Invoice } from "@getalby/lightning-tools";
-import { Response } from "express";
-import { io } from "../app";
-
-
-export const listenInvoice = async (
-  invoice: Invoice,
-  res: Response
-) => {
+module.exports.listenInvoice = async (req, invoice, res) => {
   try {
     const intervalId = setInterval(async () => {
       const paid = await invoice.isPaid();
       if (paid) {
         clearInterval(intervalId);
-        io.emit("payment-verified", {
+        req.io.emit("payment-verified", {
           message: "Payment verified successfully",
         });
       }
