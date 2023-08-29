@@ -11,7 +11,7 @@ module.exports.listenInvoice = async (req, invoice, res) => {
         });
         sendNotification(req.body, res);
       }
-    }, 5000);
+    }, 3000);
   } catch (error) {
     res.status(400).json({
       error: "Error occured while verifying payment",

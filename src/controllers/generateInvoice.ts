@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { LightningAddress } from "@getalby/lightning-tools";
-import { Invoice } from "@getalby/lightning-tools";
+import { LightningAddress, Invoice } from "@getalby/lightning-tools";
 import { listenInvoice } from "../helpers/listenInvoice";
+import { sumAmount } from "../utils/sumAmount";
 
 if (!process.env.MERCHANT_LN_ADDRESS) {
   throw new Error(
@@ -12,20 +12,21 @@ if (!process.env.MERCHANT_LN_ADDRESS) {
 const ln = new LightningAddress(process.env.MERCHANT_LN_ADDRESS);
 
 export const generateInvoice = async (req: Request, res: Response) => {
+  const { name, email, order, products } = req.body;
   try {
-    if (!req.body.amount) {
+    if (products.length == 0) {
       return res.status(400).json({
-        error: "Please specify your invoice amount",
+        error: "Please select products to purchase",
       });
     }
     await ln.fetch();
     // get the LNURL-pay data:
     const invoice: Invoice = await ln.requestInvoice({
-      satoshi: req.body.amount,
-      comment: req.body.order,
+      satoshi: sumAmount(products),
+      comment: order,
       payerdata: {
-        name: req.body.name,
-        email: req.body.email,
+        name: name,
+        email: email,
       },
     });
 

@@ -1,4 +1,6 @@
 import { Response } from "express";
+import { sumAmount } from "../utils/sumAmount";
+import { getProductNames } from "../utils/productName";
 
 var nodemailer = require("nodemailer");
 const Handlebars = require("handlebars");
@@ -14,8 +16,7 @@ const compiledTemplate = Handlebars.compile(template);
 export interface EmailPayload {
   name: string;
   email: string;
-  products: string;
-  amount: number;
+  products: Array<number>;
   address: string;
 }
 
@@ -39,9 +40,9 @@ async function sendNotification(payload: EmailPayload, res: Response) {
   const html = compiledTemplate({
     name: payload.name,
     email: payload.email,
-    amount: payload.amount,
+    amount: sumAmount(payload.products),
     address: payload.address,
-    products: payload.products,
+    products: getProductNames(payload.products),
     support: "mailto:"+process.env.EMAIL_ADDRESS
   });
 

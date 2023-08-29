@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-const data = require("../../data.json");
+import { Product } from "./interfaces/ProductInterface";
+
+
+const data:Array<Product> = require("../../data.json");
 
 export const fetchProducts = (req: Request, res: Response) => {
   try {

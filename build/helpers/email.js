@@ -2,19 +2,15 @@ var nodemailer = require("nodemailer");
 const Handlebars = require("handlebars");
 const path = require("path");
 const fs = require("fs");
-// read the contents of the email template file
+const { getProductNames } = require("../utils/productName");
+const { sumAmount } = require("../utils/sumAmount");
 const templatePath = path.join(__dirname, "../templates/email.hbs");
 const template = fs.readFileSync(templatePath, "utf-8");
 
-// compile the template using Handlebars
 const compiledTemplate = Handlebars.compile(template);
 
-
-
-if(!process.env.EMAIL_ADDRESS || !process.env.EMAIL_PASSWORD){
-    throw new Error(
-        "Please set your email credentials"
-      );
+if (!process.env.EMAIL_ADDRESS || !process.env.EMAIL_PASSWORD) {
+  throw new Error("Please set your email credentials");
 }
 
 async function sendNotification(payload, res) {
@@ -31,17 +27,17 @@ async function sendNotification(payload, res) {
   const html = compiledTemplate({
     name: payload.name,
     email: payload.email,
-    amount: payload.amount,
+    amount: sumAmount(payload.products),
     address: payload.address,
-    products: payload.products,
-    support: "mailto:"+process.env.EMAIL_ADDRESS
+    products: getProductNames(payload.products),
+    support: "mailto:" + process.env.EMAIL_ADDRESS,
   });
 
   var mailOptions = {
     from: `"Bitcoin⚡Shop <${process.env.EMAIL_ADDRESS}>"`,
     to: `${payload.email},${process.env.EMAIL_ADDRESS}`,
     replyTo: process.env.EMAIL_ADDRESS,
-    subject: "Your order has been received, "+payload.name,
+    subject: "Your order has been received, " + payload.name,
     html: html,
   };
 
