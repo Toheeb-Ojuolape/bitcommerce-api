@@ -1,6 +1,7 @@
 const { LightningAddress } =require("@getalby/lightning-tools")
 const { listenInvoice } =require("../helpers/listenInvoice");
 const { sumAmount } = require("../utils/sumAmount");
+const { getInvoiceComment } = require("../utils/getInvoiceComment");
 
 if (!process.env.MERCHANT_LN_ADDRESS) {
   throw new Error(
@@ -11,7 +12,7 @@ if (!process.env.MERCHANT_LN_ADDRESS) {
 const ln = new LightningAddress("toheeb@getalby.com");
 
 module.exports.generateInvoice = async (req, res) => {
-  const { name, email, order, products } = req.body;
+  const { name, email, products } = req.body;
   try {
     if (products.length == 0) {
       return res.status(400).json({
@@ -22,7 +23,7 @@ module.exports.generateInvoice = async (req, res) => {
     // get the LNURL-pay data:
     const invoice = await ln.requestInvoice({
       satoshi: sumAmount(products),
-      comment: order,
+      comment: getInvoiceComment(req.body),
       payerdata: {
         name: name,
         email: email

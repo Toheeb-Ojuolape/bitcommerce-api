@@ -1,4 +1,4 @@
-import { Product } from "../controllers/interfaces/ProductInterface";
+import { Product } from "../interfaces/ProductInterface";
 const data: Array<Product> = require("../../data.json");
 
 export const getProductNames = (products: Array<number>): string => {
