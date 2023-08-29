@@ -1,5 +1,6 @@
 const { LightningAddress } =require("@getalby/lightning-tools")
-const { listenInvoice } =require("../helpers/listenInvoice")
+const { listenInvoice } =require("../helpers/listenInvoice");
+const { sumAmount } = require("../utils/sumAmount");
 
 if (!process.env.MERCHANT_LN_ADDRESS) {
   throw new Error(
@@ -7,23 +8,24 @@ if (!process.env.MERCHANT_LN_ADDRESS) {
   );
 }
 
-const ln = new LightningAddress(process.env.MERCHANT_LN_ADDRESS);
+const ln = new LightningAddress("toheeb@getalby.com");
 
 module.exports.generateInvoice = async (req, res) => {
+  const { name, email, order, products } = req.body;
   try {
-    if (!req.body.amount) {
+    if (products.length == 0) {
       return res.status(400).json({
-        error: "Please specify your invoice amount",
+        error: "Please select products to purchase",
       });
     }
     await ln.fetch();
     // get the LNURL-pay data:
     const invoice = await ln.requestInvoice({
-      satoshi: req.body.amount,
-      comment: req.body.order,
+      satoshi: sumAmount(products),
+      comment: order,
       payerdata: {
-        name: req.body.name,
-        email: req.body.email
+        name: name,
+        email: email
     }
     });
 
@@ -33,6 +35,7 @@ module.exports.generateInvoice = async (req, res) => {
       invoice: invoice,
     });
   } catch (error) {
+    console.error(error)
     res.status(400).json({
       error: "Error encountered while generating invoice",
     });

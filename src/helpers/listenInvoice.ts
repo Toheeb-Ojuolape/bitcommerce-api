@@ -19,7 +19,7 @@ export const listenInvoice = async (
         });
         sendNotification(req.body as EmailPayload,res)
       }
-    }, 5000);
+    }, 3000);
   } catch (error) {
     res.status(400).json({
       error: "Error occured while verifying payment",
