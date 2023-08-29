@@ -1,32 +1,21 @@
 import { Response } from "express";
 import { sumAmount } from "../utils/sumAmount";
 import { getProductNames } from "../utils/productName";
+import { PurchaseRequest } from "../interfaces/PurchaseRequest";
 
 var nodemailer = require("nodemailer");
 const Handlebars = require("handlebars");
 const path = require("path");
 const fs = require("fs");
-// read the contents of the email template file
 const templatePath = path.join(__dirname, "../templates/email.hbs");
 const template = fs.readFileSync(templatePath, "utf-8");
-
-// compile the template using Handlebars
 const compiledTemplate = Handlebars.compile(template);
 
-export interface EmailPayload {
-  name: string;
-  email: string;
-  products: Array<number>;
-  address: string;
+if (!process.env.EMAIL_ADDRESS || !process.env.EMAIL_PASSWORD) {
+  throw new Error("Please set your email credentials");
 }
 
-if(!process.env.EMAIL_ADDRESS || !process.env.EMAIL_PASSWORD){
-    throw new Error(
-        "Please set your email credentials"
-      );
-}
-
-async function sendNotification(payload: EmailPayload, res: Response) {
+async function sendNotification(payload: PurchaseRequest, res: Response) {
   var mail = nodemailer.createTransport({
     service: "gmail",
     port: 465,
@@ -43,14 +32,14 @@ async function sendNotification(payload: EmailPayload, res: Response) {
     amount: sumAmount(payload.products),
     address: payload.address,
     products: getProductNames(payload.products),
-    support: "mailto:"+process.env.EMAIL_ADDRESS
+    support: "mailto:" + process.env.EMAIL_ADDRESS,
   });
 
   var mailOptions = {
     from: `"Bitcoin⚡Shop <${process.env.EMAIL_ADDRESS}>"`,
     to: `${payload.email},${process.env.EMAIL_ADDRESS}`,
     replyTo: process.env.EMAIL_ADDRESS,
-    subject: "Your order has been received, "+payload.name,
+    subject: "Your order has been received, " + payload.name,
     html: html,
   };
 

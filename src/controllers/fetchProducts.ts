@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Product } from "./interfaces/ProductInterface";
+import { Product } from "../interfaces/ProductInterface";
 
 
 const data:Array<Product> = require("../../data.json");
